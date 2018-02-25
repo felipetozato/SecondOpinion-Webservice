@@ -1,0 +1,11 @@
+{
+	"port": 8080,
+	"bodyLimit": "100kb",
+	"corsHeaders": ["Link"],
+	"quickblox" : {
+		"appId": 62214,
+		"authorizationKey": "mzWGZk5pgpjf3vS",
+		"authorizationSecret": "rnjmMrygxDMbdAG",
+		"debug": {"mode": 1}
+	}
+}
