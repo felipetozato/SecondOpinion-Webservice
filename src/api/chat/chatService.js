@@ -2,9 +2,10 @@
 
 import { QuickBlox } from 'quickblox'
 
+export let ChatTypeEnum = Object.freeze({private: 1, group_private: 2, group_public: 3})
+
 //@ts-check
 export default class ChatService {
-
 
     /**
      * Create a new instance of LoginService
@@ -20,6 +21,27 @@ export default class ChatService {
         console.log(params)
         return new Promise((resolve, reject) => {
             this._quickblox.chat.connect(params, (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(result)
+                }
+            })
+        })
+    }
+
+    createrGroupDialog(chatType, occupants, dialogName) {
+        chatType = ChatTypeEnum[chatType]
+        if (chatType === undefined) {
+            throw ({code: 422, message: "Chat type must be private group_private or group_public"});
+        }
+        let params = {
+            type: chatType,
+            occupants_ids: occupants,
+            name: dialogName
+        }
+        return new Promise((resolve, reject) => {
+            this._quickblox.chat.dialog.create(params, (err, result) => {
                 if (err) {
                     reject(err)
                 } else {

@@ -26,6 +26,13 @@ export default ({ chatService, dialogService }) => {
         res.status(200).send(result)
     }))
 
+    api.post('/group_dialog', asyncMiddleware( async (req, res, next) => {
+        let params = req.body;
+        console.log(params)
+        let result = await chatService.createrGroupDialog(params.type, params.occupants_ids, params.name)
+        res.status(201).send()
+    }))
+
     api.get('/', asyncMiddleware( async (req, res, next) => {
         let result = await chatService.getAllChats(req.query.page, req.query.per_page)
         res.status(200).send(result)
