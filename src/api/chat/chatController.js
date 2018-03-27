@@ -30,7 +30,7 @@ export default ({ chatService, dialogService }) => {
         let params = req.body;
         console.log(params)
         let result = await chatService.createrGroupDialog(params.type, params.occupants_ids, params.name)
-        res.status(201).send()
+        res.status(201).send(result)
     }))
 
     api.get('/', asyncMiddleware( async (req, res, next) => {

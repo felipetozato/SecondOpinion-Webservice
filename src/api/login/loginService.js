@@ -25,6 +25,7 @@ export default class LoginService {
     async loginWithEmail(email, password) {
         console.log("entrou do servico loginWithEmail")
         let applicationSession = await this._createApplicationSession()
+        console.log(application);
         let userSession = await this._emailLogin(applicationSession, email, password)
         return userSession
     }
@@ -35,7 +36,6 @@ export default class LoginService {
      * @returns {Promise} result
      */
     _createApplicationSession() {
-        console.log("mysssion")
         return new Promise((resolve, reject) => {
             this._quickblox.createSession((err, res) => {
                 if (err != null) {
