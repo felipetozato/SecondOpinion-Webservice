@@ -13,8 +13,7 @@ export default ({ loginService }) => {
     api.post('/', async (req, res, next) => {
         try {
             let result = await loginService.loginWithEmail(req.body.email, req.body.password)
-            res.statusCode = 200
-            res.send(result)
+            res.status(200).send(result);
         } catch (e) {
             next(e)
         }
