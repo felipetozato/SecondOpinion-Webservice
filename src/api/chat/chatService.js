@@ -69,6 +69,24 @@ export default class ChatService {
         })
     }
 
+    sendMessageToDialog(dialogId, message) {
+        let msg = {
+            chat_dialog_id: dialogId,
+            message: message,
+            send_to_chat: 1,
+            save_to_history: 1
+        }
+        return new Promise((resolve, reject) => {
+            let messageId = this._quickblox.chat.message.create(msg, (err, res) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(res)
+                }
+            })
+        })
+    }
+
     getAllChats(page_number, amount_per_page) {
         var filters = {limit: amount_per_page, skip: (page_number - 1) * amount_per_page};
         return new Promise((resolve, reject) => {

@@ -19,9 +19,15 @@ export default ({ chatService, dialogService }) => {
     }))
 
     api.post('/private_message', asyncMiddleware( async (req, res, next) => {
-        let recipientUserId = req.body.recipient_id
         let message = req.body.message
-        let result = await chatService.sendMessageToUser(recipientUserId, message)
+        var result = null;
+        if (req.body.recipient_id) {
+            let recipientUserId = req.body.recipient_id
+            result = await chatService.sendMessageToUser(recipientUserId, message)
+        } else {
+            let dialogId = req.body.chat_dialog_id
+            result = await chatService.sendMessageToDialog(dialogId, message)
+        }
         console.log(result)
         res.status(200).send(result)
     }))

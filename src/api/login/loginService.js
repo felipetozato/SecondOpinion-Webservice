@@ -25,7 +25,7 @@ export default class LoginService {
     async loginWithEmail(email, password) {
         console.log("entrou do servico loginWithEmail")
         let applicationSession = await this._createApplicationSession()
-        console.log(application);
+        console.log(applicationSession);
         let userSession = await this._emailLogin(applicationSession, email, password)
         return userSession
     }
