@@ -41,6 +41,7 @@ export default ({ chatService, dialogService }) => {
 
     api.get('/', asyncMiddleware( async (req, res, next) => {
         let result = await chatService.getAllChats(req.query.page, req.query.per_page)
+        console.log(result)
         res.status(200).send(result)
     }))
 
