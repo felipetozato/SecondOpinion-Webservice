@@ -4,9 +4,8 @@
   "description": "Second Opinion API",
   "main": "dist",
   "scripts": {
-    "dev": "nodemon -w src --exec \"babel-node src --debug --presets env,stage-0\"",
-    "build": "babel-node src -s -D -d dist --presets env,stage-0",
-    "heroku-prebuild": "npm install",
+    "dev": "nodemon -w src --exec \"babel-node src --debug\"",
+    "build": "babel src -s -D -d dist",
     "start": "node dist",
     "prestart": "npm run -s build",
     "test": "eslint src"
@@ -35,21 +34,22 @@
   "author": "",
   "license": "UNLICENSED",
   "dependencies": {
+    "@babel/polyfill": "^7.0.0",
     "body-parser": "^1.13.3",
     "compression": "^1.5.2",
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "morgan": "^1.8.0",
-    "quickblox": "^2.6.1",
+    "quickblox": "^2.12.0",
     "resource-router-middleware": "^0.6.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.9.0",
-    "babel-core": "^6.9.0",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-stage-0": "^6.5.0",
-    "eslint": "^3.1.1",
-    "nodemon": "^1.9.2"
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^5.5.0",
+    "nodemon": "^1.18.4"
   },
   "bugs": {
     "url": "https://github.com/developit/express-es6-rest-api/issues"
