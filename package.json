@@ -1,11 +1,11 @@
 {
-  "name": "express-es6-rest-api",
+  "name": "secondopinion-api",
   "version": "0.0.1",
-  "description": "Starter project for an ES6 RESTful Express API",
+  "description": "Second Opinion API",
   "main": "dist",
   "scripts": {
     "dev": "nodemon -w src --exec \"babel-node src --presets env,stage-0\"",
-    "build": "babel src -s -D -d dist --presets env,stage-0",
+    "build": "babel-node src -s -D -d dist --presets env,stage-0",
     "start": "node dist",
     "prestart": "npm run -s build",
     "test": "eslint src"
@@ -31,7 +31,7 @@
     "type": "git",
     "url": "git+https://github.com/developit/express-es6-rest-api.git"
   },
-  "author": "Jason Miller <jason@developit.ca>",
+  "author": "",
   "license": "UNLICENSED",
   "dependencies": {
     "body-parser": "^1.13.3",

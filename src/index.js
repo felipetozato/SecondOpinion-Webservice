@@ -22,16 +22,21 @@ app.use(cors({
 }));
 
 app.use(bodyParser.json({
-	limit : config.bodyLimit
+	limit: config.bodyLimit
 }));
 app.use(bodyParser.urlencoded({
 	extended: true
 }))
 
-app.use(middleware({ config }));
+app.use(middleware({
+	config
+}));
 
 // api router
-app.use('/', api({ config, QB }));
+app.use('/', api({
+	config,
+	QB
+}));
 
 app.server.listen(process.env.PORT || config.port, () => {
 	console.log(`Started on port ${app.server.address().port}`);
