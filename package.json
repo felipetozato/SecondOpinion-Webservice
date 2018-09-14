@@ -4,8 +4,9 @@
   "description": "Second Opinion API",
   "main": "dist",
   "scripts": {
-    "dev": "nodemon -w src --exec \"babel-node src --presets env,stage-0\"",
+    "dev": "nodemon -w src --exec \"babel-node src --debug --presets env,stage-0\"",
     "build": "babel-node src -s -D -d dist --presets env,stage-0",
+    "heroku-prebuild": "npm install",
     "start": "node dist",
     "prestart": "npm run -s build",
     "test": "eslint src"
