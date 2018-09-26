@@ -5,9 +5,10 @@
   "main": "dist",
   "scripts": {
     "dev": "nodemon -w src --exec \"babel-node src --debug\"",
-    "build": "babel src -s -D -d dist",
-    "start": "node dist",
-    "prestart": "npm run -s build",
+    "clean": "rm -rf dist && mkdir dist",
+    "build-babel": "babel -d ./dist ./src -s -D",
+    "build": "npm run clean && npm run build-babel",
+    "start": "npm run build && node --optimize_for_size --max_old_space_size=460 --gc_interval=100 ./dist",
     "test": "eslint src"
   },
   "eslintConfig": {
@@ -38,10 +39,10 @@
     "body-parser": "^1.13.3",
     "compression": "^1.5.2",
     "cors": "^2.7.1",
-    "express": "^4.13.3",
-    "morgan": "^1.8.0",
+    "express": "^4.16.3",
+    "morgan": "^1.9.1",
     "quickblox": "^2.12.0",
-    "resource-router-middleware": "^0.6.0"
+    "resource-router-middleware": "^0.7.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -54,5 +55,8 @@
   "bugs": {
     "url": "https://github.com/developit/express-es6-rest-api/issues"
   },
-  "homepage": "https://github.com/developit/express-es6-rest-api#readme"
+  "homepage": "https://github.com/developit/express-es6-rest-api#readme",
+  "engines": {
+    "node": "8.11.4"
+  }
 }

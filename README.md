@@ -30,7 +30,7 @@ npm install
 PORT=8080 npm run dev
 
 # Start production server:
-PORT=8080 npm start
+PORT=80 npm start
 ```
 Docker Support
 ------
