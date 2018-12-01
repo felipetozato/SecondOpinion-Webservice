@@ -7,6 +7,7 @@ import UserService from './user/userService'
 import tokenInterceptor from '../middleware/tokenInterceptor'
 import ChatService from './chat/chatService'
 import DialogService from './chat/dialogService'
+import MedicalService from './chat/medicalStructureService'
 import chat from './chat/chatController'
 
 export default ({ config, QB }) => {
@@ -24,7 +25,8 @@ export default ({ config, QB }) => {
 	api.use('/users', users({ userService }))
 
 	// mount the chat resource
-	let chatService = new ChatService(QB)
+	let medicalService = new MedicalService(config.medicalService)
+	let chatService = new ChatService(QB, medicalService)
 	let dialogService = new DialogService(QB)
 	api.use('/chat', chat({ chatService, dialogService }))
 

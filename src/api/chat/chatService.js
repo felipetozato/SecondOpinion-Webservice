@@ -12,8 +12,9 @@ export default class ChatService {
      * 
      * @param {QuickBlox} quickblox
      */
-    constructor(quickblox) {
+    constructor(quickblox, medicalService) {
         this._quickblox = quickblox
+        this._medicalSerbice = medicalService
     }
 
     connect(userId, password) {
@@ -66,6 +67,9 @@ export default class ChatService {
                     resolve(res)
                 }
             })
+        }).then(quickbloxResult => {
+            return this._medicalSerbice.saveAndProcess(message)
+            .then(result => quickbloxResult)
         })
     }
 
@@ -84,6 +88,9 @@ export default class ChatService {
                     resolve(res)
                 }
             })
+        }).then(quickbloxResult => {
+            return this._medicalSerbice.saveAndProcess(message)
+            .then(result => quickbloxResult)
         })
     }
 

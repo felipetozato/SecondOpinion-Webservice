@@ -7,5 +7,6 @@
 		"authorizationKey": "mzWGZk5pgpjf3vS",
 		"authorizationSecret": "rnjmMrygxDMbdAG",
 		"debug": {"mode": 1}
-	}
+	},
+	"medicalService" : "http://localhost:8080"
 }

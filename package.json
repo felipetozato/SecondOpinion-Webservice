@@ -4,7 +4,7 @@
   "description": "Second Opinion API",
   "main": "dist",
   "scripts": {
-    "dev": "nodemon -w src --exec \"babel-node src --debug\"",
+    "dev": "nodemon -w src --exec \"babel-node src --inspect\"",
     "clean": "rm -rf dist && mkdir dist",
     "build-babel": "babel -d ./dist ./src -s -D",
     "build": "npm run clean && npm run build-babel",
