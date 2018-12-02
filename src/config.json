@@ -8,5 +8,5 @@
 		"authorizationSecret": "rnjmMrygxDMbdAG",
 		"debug": {"mode": 1}
 	},
-	"medicalService" : "http://localhost:8080"
+	"medicalService" : "http://medicalconversation.herokuapp.com"
 }
