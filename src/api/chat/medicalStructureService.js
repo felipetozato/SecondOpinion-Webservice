@@ -27,4 +27,14 @@ export default class MedicalStructureService {
         }
         return request.post(option)
     }
+
+    getAllPatients() {
+        let option = {
+            method: 'GET',
+            uri: this._baseUrl + "/patients",
+            json: true
+        }
+
+        return request.get(option)
+    }
 }

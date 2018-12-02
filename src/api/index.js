@@ -9,6 +9,7 @@ import ChatService from './chat/chatService'
 import DialogService from './chat/dialogService'
 import MedicalService from './chat/medicalStructureService'
 import chat from './chat/chatController'
+import patients from './patient/patientController'
 
 export default ({ config, QB }) => {
 	let api = Router()
@@ -24,8 +25,13 @@ export default ({ config, QB }) => {
 	let userService = new UserService(QB)
 	api.use('/users', users({ userService }))
 
-	// mount the chat resource
+	//Medical Service
 	let medicalService = new MedicalService(config.medicalService)
+
+	// mount the patient resource
+	api.use('/patients', patients({ medicalService }))
+
+	// mount the chat resource
 	let chatService = new ChatService(QB, medicalService)
 	let dialogService = new DialogService(QB)
 	api.use('/chat', chat({ chatService, dialogService }))
