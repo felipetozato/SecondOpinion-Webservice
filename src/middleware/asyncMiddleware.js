@@ -2,9 +2,9 @@ function handleHTTPError(err, res) {
     res.setHeader('Content-Type', 'application/json')
     switch (err.code) {
         case 401:
-            return res.status(401).json(prepareJsonErrorBody(err.status, err.message))
+            res.status(401).send(prepareJsonErrorBody(err.status, err.message))
         default:
-            return res.status(err.code).json(prepareJsonErrorBody(err.status, err.message))
+            res.status(err.code).send(prepareJsonErrorBody(err.status, err.message))
     }
 }
 

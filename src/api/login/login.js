@@ -1,7 +1,7 @@
 "use strict"
 
 import { Router } from 'express';
-import asyncMiddleware from '../../middleware/asyncMiddleware'
+import { asyncMiddleware } from '../../middleware/asyncMiddleware'
 //@ts-check
 
 /**
@@ -14,10 +14,15 @@ export default ({ loginService }) => {
         try {
             let result = await loginService.loginWithEmail(req.body.email, req.body.password)
             res.status(200).send(result);
-        } catch (e) {
-            next(e)
+        } catch (err) {
+            switch (err.code) {
+                case 401:
+                    res.status(401).send(err)
+                default:
+                    res.status(err.code).send(err)
+            }
         }
-    });
+    })
 
     return api
 }
