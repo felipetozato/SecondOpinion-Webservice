@@ -2,7 +2,7 @@
 
 import { QuickBlox } from 'quickblox'
 
-export let ChatTypeEnum = Object.freeze({private: 1, group_private: 2, group_public: 3})
+export let ChatTypeEnum = Object.freeze({private: 3, group_private: 2, group_public: 1})
 
 //@ts-check
 export default class ChatService {
@@ -12,9 +12,10 @@ export default class ChatService {
      * 
      * @param {QuickBlox} quickblox
      */
-    constructor(quickblox, medicalService) {
+    constructor(quickblox, medicalService, dialogService) {
         this._quickblox = quickblox
-        this._medicalSerbice = medicalService
+        this._medicalService = medicalService
+        this._dialogService = dialogService
     }
 
     connect(userId, password) {
@@ -52,25 +53,11 @@ export default class ChatService {
         })
     }
 
-    sendMessageToUser(recipientUserId, message) {
-        let msg = {
-            recipient_id: recipientUserId,
-            message: message,
-            send_to_chat: 1,
-            save_to_history: 1
+    async sendMessageToUser(recipientUserId, message, isNew = false) {
+        if (isNew) {
+            await this._dialogService.createPrivateDialog(recipientUserId)
         }
-        return new Promise((resolve, reject) => {
-            let messageId = this._quickblox.chat.message.create(msg, (err, res) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    resolve(res)
-                }
-            })
-        }).then(quickbloxResult => {
-            return this._medicalSerbice.saveAndProcess(message)
-            .then(result => quickbloxResult)
-        })
+        return this._send1o1Message(recipientUserId, message)
     }
 
     sendMessageToDialog(dialogId, message) {
@@ -89,7 +76,7 @@ export default class ChatService {
                 }
             })
         }).then(quickbloxResult => {
-            return this._medicalSerbice.saveAndProcess(message)
+            return this._medicalService.saveAndProcess(message)
             .then(result => quickbloxResult)
         })
     }
@@ -118,5 +105,28 @@ export default class ChatService {
                 }
             })
         })
+    }
+
+    _send1o1Message(recipientUserId, message) {
+        let msg = {
+            recipient_id: recipientUserId,
+            message: message,
+            send_to_chat: 1,
+            save_to_history: 1
+        }
+        return new Promise((resolve, reject) => {
+            let messageId = this._quickblox.chat.message.create(msg, (err, res) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    console.log(res)
+                    resolve(res)
+                }
+            })
+        })
+        // .then(quickbloxResult => {
+        //     return this._medicalService.saveAndProcess(message)
+        //     .then(result => quickbloxResult)
+        // })
     }
 }

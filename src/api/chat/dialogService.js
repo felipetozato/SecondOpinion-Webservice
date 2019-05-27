@@ -10,25 +10,29 @@ export default class DialogService {
      * 
      * @param {QuickBlox} quickblox
      */
-    constructor(quickblox) {
+    constructor(quickblox, userService) {
         this._quickblox = quickblox
+        this._userService = userService
     }
 
     createPrivateDialog(toId) {
-        let params = {
-            type: 3,
-            occupants_ids: [toId]
-        }
-        return new Promise((resolve, reject) => {
-            this._quickblox.chat.dialog.create(params, (err, createdDialog) => {
-                if (err) {
-                    console.log(err)
-                    reject(err)
-                } else {
-                    console.log(err)
-                    resolve(createdDialog)
+        this._userService.getSingleUser(toId)
+            .then(user => {
+                let params = {
+                    type: 3,
+                    occupants_ids: [toId],
+                    photo: user.photo
                 }
+                return new Promise((resolve, reject) => {
+                    this._quickblox.chat.dialog.create(params, (err, createdDialog) => {
+                        if (err !== null) {
+                            console.log(err)
+                            reject(err)
+                        } else {
+                            resolve(createdDialog)
+                        }
+                    })
+                })
             })
-        })
     }
 }

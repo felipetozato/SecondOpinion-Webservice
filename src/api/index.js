@@ -32,8 +32,8 @@ export default ({ config, QB }) => {
 	api.use('/patients', patients({ medicalService }))
 
 	// mount the chat resource
-	let chatService = new ChatService(QB, medicalService)
-	let dialogService = new DialogService(QB)
+	let dialogService = new DialogService(QB, userService)
+	let chatService = new ChatService(QB, medicalService, dialogService)
 	api.use('/chat', chat({ chatService, dialogService }))
 
 	// perhaps expose some API metadata at the root
