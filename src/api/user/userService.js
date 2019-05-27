@@ -28,11 +28,37 @@ export default class UserService {
                     reject(err)
                 } else {
                     result.items = result.items.map((value) => {
-                        return value.user
+                        console.log(value.user.custom_data)
+                        return this._prepareUserPhotodata(value.user)
                     })
                     resolve(result)
                 }
             })
         })
+    }
+
+    getSingleUser(userId) {
+        return new Promise((resolve, reject) => {
+            console.log("user with id: "+userId)
+            var params = {filter: { field: 'id', param: 'in', value: [userId] }};
+            this._quickblox.users.listUsers(params, (err, result) => {
+                if (err !== null) {
+                    reject(err)
+                } else {
+                    let user = result.items[0].user
+                    resolve(this._prepareUserPhotodata(user))
+                }
+            })
+        })
+    }
+
+    _prepareUserPhotodata(user) {
+        if (user.custom_data) {
+            let customData = JSON.parse(user.custom_data)
+            if (customData.photo) {
+                user.photo = customData.photo
+            }
+        }
+        return user
     }
 }
