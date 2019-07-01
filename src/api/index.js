@@ -8,6 +8,7 @@ import tokenInterceptor from '../middleware/tokenInterceptor'
 import ChatService from './chat/chatService'
 import DialogService from './chat/dialogService'
 import MedicalService from './chat/medicalStructureService'
+import MongoDbService from './db/MongoDbService'
 import chat from './chat/chatController'
 import patients from './patient/patientController'
 
@@ -26,7 +27,8 @@ export default ({ config, QB }) => {
 	api.use('/users', users({ userService }))
 
 	//Medical Service
-	let medicalService = new MedicalService(config.medicalService)
+	let mongoDbService = new MongoDbService(config.mongoDb)
+	let medicalService = new MedicalService(config.medicalService, mongoDbService)
 
 	// mount the patient resource
 	api.use('/patients', patients({ medicalService }))

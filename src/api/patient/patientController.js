@@ -17,5 +17,13 @@ export default ({ medicalService }) => {
         res.status(200).send(result)
     }))
 
+    api.get('/data', asyncMiddleware( async (req, res, next) => {
+        let name = req.query.name
+        if (name == undefined) return res.status(422).send("missing name paramenter")
+        let result = await medicalService.getPatientData(name)
+        console.log(result)
+        res.status(200).send(result)
+    }))
+
     return api;
 }

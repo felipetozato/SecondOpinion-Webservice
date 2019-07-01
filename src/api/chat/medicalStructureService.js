@@ -3,12 +3,9 @@ import request from 'request-promise'
 
 export default class MedicalStructureService {
 
-    /**
-     * 
-     * @param {string} baseUrl 
-     */
-    constructor(baseUrl) {
+    constructor(baseUrl, mongoDbService) {
         this._baseUrl = baseUrl
+        this._mongoDbService = mongoDbService
     }
 
     /**
@@ -28,13 +25,35 @@ export default class MedicalStructureService {
         return request.post(option)
     }
 
+    /**
+     * Return a list of all patients
+     * 
+     * @returns {Promise<Array<Patient>>} a list of patients objects
+     */
     getAllPatients() {
         let option = {
             method: 'GET',
             uri: this._baseUrl + "/patients",
             json: true
         }
-
         return request.get(option)
+    }
+
+    /**
+     * Return all data of a patient based on it's name
+     * 
+     * @param {String} patient name 
+     * @returns {Document} document with all things
+     */
+    getPatientData(name) {
+        let option = {
+            method: 'POST',
+            uri: this._baseUrl + "/patients/data",
+            json: true,
+            body: {
+                "name": name
+            }
+        }
+        return request.post(option)
     }
 }

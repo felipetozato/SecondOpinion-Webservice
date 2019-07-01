@@ -8,5 +8,8 @@
 		"authorizationSecret": "rnjmMrygxDMbdAG",
 		"debug": {"mode": 1}
 	},
-	"medicalService" : "http://medicalconversation.herokuapp.com"
+	"medicalService" : "http://medicalconversation.herokuapp.com",
+	"mongoDb" : {
+		"uri" : "mongodb://felanca:wingardium547@ds237267.mlab.com:37267/heroku_r7cx0jkg"
+	}
 }

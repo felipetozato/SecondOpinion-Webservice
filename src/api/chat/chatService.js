@@ -124,9 +124,9 @@ export default class ChatService {
                 }
             })
         })
-        // .then(quickbloxResult => {
-        //     return this._medicalService.saveAndProcess(message)
-        //     .then(result => quickbloxResult)
-        // })
+        .then(quickbloxResult => {
+            return this._medicalService.saveAndProcess(message)
+            .then(result => quickbloxResult)
+        })
     }
 }
