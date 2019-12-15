@@ -11,6 +11,8 @@ export default class ChatService {
      * Create a new instance of LoginService
      * 
      * @param {QuickBlox} quickblox
+     * @param {MedicalStructureService} medicalService
+     * @param {dialogService} dialogService
      */
     constructor(quickblox, medicalService, dialogService) {
         this._quickblox = quickblox
@@ -53,14 +55,14 @@ export default class ChatService {
         })
     }
 
-    async sendMessageToUser(recipientUserId, message, isNew = false) {
+    async sendMessageToUser(recipientUserId, senderId, message, isNew = false) {
         if (isNew) {
             await this._dialogService.createPrivateDialog(recipientUserId)
         }
-        return this._send1o1Message(recipientUserId, message)
+        return this._send1o1Message(recipientUserId, senderId, message)
     }
 
-    sendMessageToDialog(dialogId, message) {
+    sendMessageToDialog(dialogId, senderId, message) {
         let msg = {
             chat_dialog_id: dialogId,
             message: message,
@@ -76,7 +78,7 @@ export default class ChatService {
                 }
             })
         }).then(quickbloxResult => {
-            return this._medicalService.saveAndProcess(message)
+            return this._medicalService.saveAndProcess(message, senderId)
             .then(result => quickbloxResult)
         })
     }
@@ -107,7 +109,17 @@ export default class ChatService {
         })
     }
 
-    _send1o1Message(recipientUserId, message) {
+    /**
+     * Get a list of suggestions
+     * 
+     * @param {Number} doctorId 
+     * @returns {Promise<Array<String>>} list of suggestions
+     */
+    getSuggestionList(doctorId) {
+        return this._medicalService.getSuggestionList(doctorId)
+    }
+
+    _send1o1Message(recipientUserId, senderId, message) {
         let msg = {
             recipient_id: recipientUserId,
             message: message,
@@ -125,7 +137,7 @@ export default class ChatService {
             })
         })
         .then(quickbloxResult => {
-            return this._medicalService.saveAndProcess(message)
+            return this._medicalService.saveAndProcess(message, senderId)
             .then(result => quickbloxResult)
         })
     }

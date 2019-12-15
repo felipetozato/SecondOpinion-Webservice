@@ -13,12 +13,13 @@ export default class MedicalStructureService {
      * @param {string} message 
      * @returns {Promise<void>} save and process result
      */
-    saveAndProcess(message) {
+    saveAndProcess(message, senderId) {
         let option = {
             method: 'POST',
             uri: this._baseUrl + "/processText",
             body: {
-                body: message
+                body: message,
+                sender_id: senderId
             },
             json: true
         }
@@ -55,5 +56,15 @@ export default class MedicalStructureService {
             }
         }
         return request.post(option)
+    }
+    
+    getSuggestionList(doctorId) {
+        // let option = {
+        //     method: 'GET',
+        //     uri: this._baseUrl + "/doctor/suggestion?doctorId=" + doctorId,
+        //     json: true
+        // }
+        // return request.get(option)
+        return new Promise((resolve, reject) => resolve(["AAA", "BBB", "CCC"]))
     }
 }
