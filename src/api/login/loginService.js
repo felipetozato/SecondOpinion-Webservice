@@ -24,9 +24,11 @@ export default class LoginService {
      */
     async loginWithEmail(email, password) {
         console.log("entrou do servico loginWithEmail")
-        let applicationSession = await this._createApplicationSession()
-        console.log(applicationSession);
-        let userSession = await this._emailLogin(applicationSession, email, password)
+        //let applicationSession = await this._createApplicationSession()
+        let userSession = await this._createSession(email, password)
+        console.log(login);
+        let login = await this._emailLogin(email, password)
+        userSession.user_login = login
         return userSession
     }
 
@@ -48,7 +50,23 @@ export default class LoginService {
         })
     }
 
-    _emailLogin(applicationSession, userEmail, userPassword) {
+    _emailLogin(userEmail, userPassword) {
+        console.log("entrou no servico _emailLogin")
+        let param = {email: userEmail, password: userPassword}
+        return new Promise((resolve, reject) => {
+            this._quickblox.login(param, (err, res) => {
+                if (err != null) {
+                    console.log("Error while trying to login user with email:"+userEmail+" and password:"+userPassword)
+                    console.log(err)
+                    reject(err)
+                } else {
+                    resolve(res)
+                }
+            })
+        })
+    }
+
+    _createSession(userEmail, userPassword) {
         console.log("entrou no servico _emailLogin")
         let param = {email: userEmail, password: userPassword}
         return new Promise((resolve, reject) => {
