@@ -59,12 +59,11 @@ export default class MedicalStructureService {
     }
     
     getSuggestionList(doctorId) {
-        // let option = {
-        //     method: 'GET',
-        //     uri: this._baseUrl + "/doctor/suggestion?doctorId=" + doctorId,
-        //     json: true
-        // }
-        // return request.get(option)
-        return new Promise((resolve, reject) => resolve(["AAA", "BBB", "CCC"]))
+        let option = {
+            method: 'GET',
+            uri: this._baseUrl + "/doctor/word_count?name=" + doctorId,
+            json: true
+        }
+        return request.get(option)
     }
 }
