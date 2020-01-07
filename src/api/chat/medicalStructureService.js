@@ -55,6 +55,7 @@ export default class MedicalStructureService {
                 "name": name
             }
         }
+        console.log("CHEGOU AQUI!!!")
         return request.post(option)
     }
     
