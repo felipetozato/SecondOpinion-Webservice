@@ -67,7 +67,8 @@ export default class ChatService {
             chat_dialog_id: dialogId,
             message: message,
             send_to_chat: 1,
-            save_to_history: 1
+            save_to_history: 1,
+            sender_name: senderId
         }
         return new Promise((resolve, reject) => {
             let messageId = this._quickblox.chat.message.create(msg, (err, res) => {
@@ -124,7 +125,8 @@ export default class ChatService {
             recipient_id: recipientUserId,
             message: message,
             send_to_chat: 1,
-            save_to_history: 1
+            save_to_history: 1,
+            sender_name: senderId
         }
         return new Promise((resolve, reject) => {
             let messageId = this._quickblox.chat.message.create(msg, (err, res) => {
